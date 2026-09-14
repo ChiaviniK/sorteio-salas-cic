@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Raleway", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Azul institucional Unesp (base Pantone 661C) e tonalidades */
+  --color-unesp-50: #eff5fd;
+  --color-unesp-100: #dde8fa;
+  --color-unesp-200: #bdd3f5;
+  --color-unesp-300: #8fb2ec;
+  --color-unesp-400: #5c8fe0;
+  --color-unesp-500: #2f6fd4;
+  --color-unesp-600: #1257c4;
+  --color-unesp-700: #0043ad;
+  --color-unesp-800: #003594;
+  --color-unesp-900: #002776;
+  --color-unesp-950: #001a4d;
+}
+
+body {
+  @apply bg-slate-50 font-sans text-slate-800 antialiased;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm;
+  }
+
+  .btn-primario {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-unesp-800 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-unesp-800/20 transition-all duration-150 hover:bg-unesp-700 active:bg-unesp-900 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-unesp-600;
+  }
+
+  .btn-secundario {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-unesp-200 bg-white px-4 py-2.5 text-sm font-semibold text-unesp-800 transition-all duration-150 hover:border-unesp-300 hover:bg-unesp-50 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-unesp-600;
+  }
+
+  .btn-fantasma {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40;
+  }
+
+  .campo {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm outline-none transition focus:border-unesp-500 focus:ring-2 focus:ring-unesp-200;
+  }
+
+  .rotulo {
+    @apply mb-1.5 block text-sm font-semibold text-slate-700;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.surgir {
+  animation: surgir 0.35s ease-out both;
+}
+
+.rolagem-fina::-webkit-scrollbar {
+  width: 6px;
+}
+.rolagem-fina::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #cbd5e1;
+}
+
+/* ---------- Impressão ---------- */
+.area-impressao {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .nao-imprimir {
+    display: none !important;
+  }
+
+  .area-impressao {
+    display: block;
+  }
+}
+
+.area-impressao {
+  color: #0f172a;
+  font-family: var(--font-sans);
+}
+.area-impressao .quebra-pagina {
+  break-after: page;
+}
+.area-impressao h1 {
+  font-family: var(--font-display);
+  font-size: 18pt;
+  font-weight: 800;
+  margin: 0;
+  color: #002776;
+}
+.area-impressao .subtitulo {
+  font-size: 10pt;
+  color: #475569;
+  margin: 1mm 0 6mm;
+}
+.area-impressao h2 {
+  font-family: var(--font-display);
+  font-size: 15pt;
+  font-weight: 800;
+  margin: 0 0 1mm;
+  color: #002776;
+}
+.area-impressao h3 {
+  font-size: 10pt;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569;
+  margin: 5mm 0 1.5mm;
+}
+.area-impressao table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9.5pt;
+}
+.area-impressao th,
+.area-impressao td {
+  border: 1px solid #cbd5e1;
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.area-impressao th {
+  background: #eff5fd;
+  font-weight: 700;
+}
