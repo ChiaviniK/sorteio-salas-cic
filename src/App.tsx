@@ -177,7 +177,15 @@ export default function App() {
       </main>
 
       <footer className="nao-imprimir border-t border-slate-200 bg-white py-6 text-center text-xs leading-relaxed text-slate-500">
-        Congresso de Iniciação Científica e Tecnológica da Unesp
+        Congresso de Iniciação Científica e Tecnológica da Unesp ·{' '}
+        <a
+          href="https://github.com/ChiaviniK/sorteio-salas-cic/blob/main/docs/TUTORIAL.md"
+          target="_blank"
+          rel="noreferrer"
+          className="font-semibold text-unesp-700 hover:underline"
+        >
+          Tutorial de uso
+        </a>
         <br />
         As planilhas são processadas apenas no seu navegador — nenhum dado é enviado a servidores.
       </footer>

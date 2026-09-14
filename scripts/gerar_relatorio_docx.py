@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-"""Gera docs/RELATORIO_TECNICO.docx a partir de docs/RELATORIO_TECNICO.md.
+"""Converte um Markdown do projeto em .docx com estilo institucional Unesp.
 
-Conversor Markdown -> Word minimalista (títulos, tabelas, listas, citações,
-blocos de código e negrito/itálico/código inline), com estilo institucional Unesp.
-Uso: python scripts/gerar_relatorio_docx.py
+Suporta títulos, tabelas, listas, citações, blocos de código, imagens e
+negrito/itálico/código inline.
+Uso: python scripts/gerar_relatorio_docx.py [origem.md] [destino.docx] [texto do rodapé]
+     (sem argumentos, gera docs/RELATORIO_TECNICO.docx a partir do relatório)
 """
 import re
+import sys
 from pathlib import Path
 
 from docx import Document
@@ -16,8 +18,9 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 RAIZ = Path(__file__).resolve().parent.parent
-ORIGEM = RAIZ / "docs" / "RELATORIO_TECNICO.md"
-DESTINO = RAIZ / "docs" / "RELATORIO_TECNICO.docx"
+ORIGEM = Path(sys.argv[1]) if len(sys.argv) > 1 else RAIZ / "docs" / "RELATORIO_TECNICO.md"
+DESTINO = Path(sys.argv[2]) if len(sys.argv) > 2 else RAIZ / "docs" / "RELATORIO_TECNICO.docx"
+RODAPE = sys.argv[3] if len(sys.argv) > 3 else "Sorteio de Salas · CIC Unesp — Relatório Técnico"
 
 AZUL_UNESP = RGBColor(0x00, 0x35, 0x94)
 AZUL_ESCURO = RGBColor(0x00, 0x27, 0x76)
@@ -56,7 +59,7 @@ def adicionar_rodape_com_pagina(doc):
     secao = doc.sections[0]
     par = secao.footer.paragraphs[0]
     par.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = par.add_run("Sorteio de Salas · CIC Unesp — Relatório Técnico · página ")
+    run = par.add_run(RODAPE + " · página ")
     run.font.size = Pt(8)
     run.font.color.rgb = CINZA
     campo_inicio = OxmlElement("w:fldChar")
@@ -123,6 +126,23 @@ def montar():
             continue
 
         if linha.strip() in ("---", ""):
+            i += 1
+            continue
+
+        imagem = re.match(r"^!\[(.*?)\]\((.+?)\)\s*$", linha.strip())
+        if imagem:
+            caminho = (ORIGEM.parent / imagem.group(2)).resolve()
+            if caminho.exists():
+                par = doc.add_paragraph()
+                par.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                par.add_run().add_picture(str(caminho), width=Cm(16))
+                if imagem.group(1):
+                    legenda = doc.add_paragraph()
+                    legenda.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    run = legenda.add_run(imagem.group(1))
+                    run.font.size = Pt(9)
+                    run.italic = True
+                    run.font.color.rgb = CINZA
             i += 1
             continue
 
@@ -212,7 +232,7 @@ def montar():
         texto = linha.strip()
         j = i + 1
         while j < len(linhas) and linhas[j].strip() and not re.match(
-            r"^(#|\||```|- |> |---|\d+\.\s)", linhas[j]
+            r"^(#|\||```|- |> |---|!\[|\d+\.\s)", linhas[j]
         ):
             texto += " " + linhas[j].strip()
             j += 1

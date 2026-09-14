@@ -42,9 +42,13 @@ hospedagem estática — GitHub Pages, Netlify, ou um servidor da própria Unesp
 
 ## Documentação
 
+- [`docs/TUTORIAL.md`](docs/TUTORIAL.md) — tutorial de uso passo a passo, com capturas de
+  tela (versão Word em `docs/TUTORIAL.docx`);
 - [`docs/RELATORIO_TECNICO.md`](docs/RELATORIO_TECNICO.md) — relatório técnico completo
   (regras de negócio, formalização matemática, algoritmo, verificação e LGPD). Versão Word
-  em `docs/RELATORIO_TECNICO.docx` (regenerável com `python scripts/gerar_relatorio_docx.py`).
+  em `docs/RELATORIO_TECNICO.docx`.
+- Versões Word regeneráveis com `python scripts/gerar_relatorio_docx.py [origem] [destino] [rodapé]`;
+  capturas de tela regeneráveis com `npx tsx scripts/capturar-telas.ts` (requer `npm run dev` ativo).
 
 ## Estrutura
 
