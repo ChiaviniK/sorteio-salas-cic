@@ -40,6 +40,12 @@ Stack: React 19 + TypeScript + Vite + Tailwind CSS 4 + SheetJS.
 O build gera arquivos estáticos com caminhos relativos (`dist/`), prontos para qualquer
 hospedagem estática — GitHub Pages, Netlify, ou um servidor da própria Unesp.
 
+## Documentação
+
+- [`docs/RELATORIO_TECNICO.md`](docs/RELATORIO_TECNICO.md) — relatório técnico completo
+  (regras de negócio, formalização matemática, algoritmo, verificação e LGPD). Versão Word
+  em `docs/RELATORIO_TECNICO.docx` (regenerável com `python scripts/gerar_relatorio_docx.py`).
+
 ## Estrutura
 
 ```
