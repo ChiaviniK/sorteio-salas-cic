@@ -25,3 +25,7 @@ dados-exemplo/
 *.njsproj
 *.sln
 *.sw?
+
+# Artefatos gerados pelo app durante testes
+Template_*_CIC.xlsx
+Resultado_Sorteio_CIC.xlsx
